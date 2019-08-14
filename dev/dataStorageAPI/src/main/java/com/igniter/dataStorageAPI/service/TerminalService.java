@@ -62,4 +62,8 @@ public class TerminalService {
     public List<Terminal> getAccountTerminals(Account account){
         return terminalRepository.findByAccount(account);
     }
+
+    public Terminal getTerminalById(int id){
+        return terminalRepository.findById(id);
+    }
 }
