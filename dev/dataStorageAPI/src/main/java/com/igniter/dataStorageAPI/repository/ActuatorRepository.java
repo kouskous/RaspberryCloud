@@ -2,7 +2,6 @@ package com.igniter.dataStorageAPI.repository;
 
 import java.util.List;
 
-import com.igniter.dataStorageAPI.entity.Account;
 import com.igniter.dataStorageAPI.entity.Actuator;
 import com.igniter.dataStorageAPI.entity.Terminal;
 

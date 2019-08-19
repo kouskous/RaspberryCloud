@@ -2,11 +2,9 @@ package com.igniter.dataStorageAPI.controller;
 
 import java.util.List;
 
-import com.igniter.dataStorageAPI.entity.Account;
 import com.igniter.dataStorageAPI.entity.Actuator;
 import com.igniter.dataStorageAPI.entity.Terminal;
 import com.igniter.dataStorageAPI.service.ActuatorService;
-import com.igniter.dataStorageAPI.service.AuthenticationService;
 import com.igniter.dataStorageAPI.service.TerminalService;
 
 import org.springframework.beans.factory.annotation.Autowired;

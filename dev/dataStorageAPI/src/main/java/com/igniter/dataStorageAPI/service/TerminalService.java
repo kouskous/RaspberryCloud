@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.igniter.dataStorageAPI.entity.Account;
 import com.igniter.dataStorageAPI.entity.Terminal;
-import com.igniter.dataStorageAPI.repository.AccountRepository;
 import com.igniter.dataStorageAPI.repository.TerminalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TerminalService {
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private TerminalRepository terminalRepository;
