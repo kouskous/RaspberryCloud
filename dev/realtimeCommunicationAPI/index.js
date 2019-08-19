@@ -1,16 +1,21 @@
 'use strict';
 
-const express = require('express');
+const
+  io = require("socket.io"),
+  server = io.listen(8000),
+  SocketService = require('./service/SocketService.js'),
+  socketService = new SocketService();
 
-// Constants
-const PORT = 8080;
-const HOST = '0.0.0.0';
+console.log("listening in port: 8000");
 
-// App
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello world\n');
+server.on("connection", (socket) => {
+  socketService.connect(socket);
+
+  socket.on('message', function (message) {
+    socketService.processMessage(socket, message);
+  });
+
+  socket.on("disconnect", () => {
+    socketService.disconnect(socket);
+  });
 });
-
-app.listen(PORT, HOST);
-console.log('Running on http://${HOST}:${PORT}');
