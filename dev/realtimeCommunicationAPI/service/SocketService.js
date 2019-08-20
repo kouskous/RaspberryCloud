@@ -1,17 +1,16 @@
-class SocketService {
-    
+const axios = require('axios');
 
-    constructor(){
-        this.clients = [] ;
+class SocketService {
+
+    constructor() {
+        this.clients = [];
     }
 
     connect(socket) {
         this.clients.push({
-            type: null,
             identifier: null,
             websocket: socket
         })
-        // TODO store in db
     }
 
     disconnect(socket) {
@@ -25,16 +24,26 @@ class SocketService {
 
     processMessage(socket, message) {
         if (message.token !== undefined) {
-            //TODO check identity in API
+            //setting token
             this.clients.forEach(client => {
-                if (socket === client) {
-                   // TODO process message in API and get destination identifiers
-                   // TODO send message to them if they are connected
+                if (client.websocket === socket) {
+                    client.identifier = message.token;
+                    console.log("setting token "+ client.identifier);
                 }
             });
+            //processing message
+            axios.post('http://163.172.162.79:5000/message', message).then((res) => {
+                let destinationIdentifiers = res.data;
+                destinationIdentifiers.forEach(identifier => {
+                    this.clients.forEach(client => {
+                        if (client.identifier === identifier) {
+                            client.websocket.emit('message', message);
+                        }
+                    });
+                })
+            })
         }
     }
-
 }
 
 module.exports = SocketService
