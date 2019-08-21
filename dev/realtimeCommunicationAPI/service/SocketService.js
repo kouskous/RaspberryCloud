@@ -24,6 +24,7 @@ class SocketService {
 
     processMessage(socket, message) {
         if (message.token !== undefined) {
+            console.log(message);
             //setting token
             this.clients.forEach(client => {
                 if (client.websocket === socket) {

@@ -1,21 +1,28 @@
 'use strict';
 
 const
-  io = require("socket.io"),
-  server = io.listen(8080),
+  WebSocket = require('ws'),
+  wss = new WebSocket.Server({ port: 8080 }),
   SocketService = require('./service/SocketService.js'),
   socketService = new SocketService();
 
-console.log("listening in port: 8080");
 
-server.on("connection", (socket) => {
+wss.on('connection', function connection(socket) {
   socketService.connect(socket);
+  socket.on('message', function incoming(message) {
+    try {
+      var messageObject = JSON.parse(message);
+      socketService.processMessage(socket, messageObject);
+    } catch (e) {
 
-  socket.on('message', function (message) {
-    socketService.processMessage(socket, message);
+    }
   });
 
-  socket.on("disconnect", () => {
+  ws.on('close', function close() {
     socketService.disconnect(socket);
   });
 });
+
+
+
+
