@@ -11,14 +11,17 @@ class SocketService {
             identifier: null,
             websocket: socket
         })
+        console.log(this.clients.length);
     }
 
     disconnect(socket) {
         this.clients.forEach(client => {
-            if (socket === client) {
-                this.clients.splice(this.clients.indexof(client), 1);
+            if (socket === client.websocket) {
+                this.clients.splice(this.clients.indexOf(client), 1);
             }
         });
+
+        console.log(this.clients.length);
         // TODO store in db
     }
 
@@ -29,7 +32,6 @@ class SocketService {
             this.clients.forEach(client => {
                 if (client.websocket === socket) {
                     client.identifier = message.token;
-                    console.log("setting token "+ client.identifier);
                 }
             });
             //processing message
@@ -38,7 +40,7 @@ class SocketService {
                 destinationIdentifiers.forEach(identifier => {
                     this.clients.forEach(client => {
                         if (client.identifier === identifier) {
-                            client.websocket.emit('message', message);
+                            client.websocket.send(JSON.stringify(message));
                         }
                     });
                 })

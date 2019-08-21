@@ -18,8 +18,9 @@ wss.on('connection', function connection(socket) {
     }
   });
 
-  ws.on('close', function close() {
+  socket.on('close', function close() {
     socketService.disconnect(socket);
+    
   });
 });
 
